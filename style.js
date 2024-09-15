@@ -1,24 +1,46 @@
-const day = "";
-switch (new Date().getDay()) {
-  case 1:
-    console.log("Astazi luni" + day);
-    break;
-  case 2:
-    console.log("Astazi marti " + day);
-    break;
-  case 3:
-    console.log("Astazi miercuri" + day);
-    break;
-  case 4:
-    console.log("Astazi joi" + day);
-    break;
-  case 5:
-    console.log("Astazi vineri" + day);
-    break;
-  case 6:
-    console.log("Astazi sambata" + day);
-    break;
-  case 7:
-    console.log("Astazi duminica" + day);
-    break;
+let addTask = document.getElementById("task");
+let taskMessage = document.getElementById("message");
+let button = document.getElementById("btn");
+let parent = document.getElementById("parent");
+
+button.addEventListener("click", createTask);
+
+parent.addEventListener("dblclick", removeTask);
+parent.addEventListener("click", markTask);
+
+function createTask() {
+  if (validInput(addTask.value)) {
+    let groupItem = document.createElement("p");
+    groupItem.innerText = addTask.value;
+    parent.appendChild(groupItem);
+    addTask.value = "";
+    taskMessage.style.visibility = "hidden";
+  } else {
+    emptyInput("Write a task");
+  }
+}
+function markTask(event) {
+  const style = event.target.style;
+
+  if (!style.textDecoration) {
+    style.textDecoration = "line-through";
+  } else {
+    style.textDecoration = "";
+  }
+}
+function removeTask() {
+  if (event.target.tagName === "P") {
+    parent.removeChild(event.target);
+  }
+}
+function emptyInput(message) {
+  taskMessage.innerText = message;
+  taskMessage.style.visibility = "visible";
+}
+
+function validInput(input) {
+  if (input) return true;
+  else {
+    return false;
+  }
 }
